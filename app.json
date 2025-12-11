@@ -14,9 +14,12 @@
     ],
     "android": {
       "package": "com.volcanomonitor.app",
-      "versionCode": 1
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#FEF9F9"
+      }
     },
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "extra": {
       "eas": {
         "projectId": "ed9e9b78-1c88-4f3b-8d79-3fab33ddac0a"
