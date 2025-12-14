@@ -20,7 +20,12 @@ const Logs = () => {
     const unsubscribe = onValue(logsQuery, (snapshot) => {
       const data = snapshot.val() || {};
       const list = Object.entries(data).map(([id, value]) => ({ id, ...value }));
-      list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      list. sort((a, b) => {
+  const timeA = a.timestamp ?  new Date(a. timestamp).getTime() : 0;
+  const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+  return timeB - timeA;
+});
+      // list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
       setLogs(list);
       setLoading(false);
     }, () => setLoading(false));
