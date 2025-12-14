@@ -34,7 +34,7 @@ const Logs = () => {
       <View style={styles.rowCard}>
         <View style={styles.rowHeader}>
           <Text style={styles.time}>{time}</Text>
-          <AlertBadge level={item.alert_level || 'green'} />
+          <AlertBadge level={item.alert_level} />
         </View>
         <Text style={styles.summary}>
           Temp: {item?.dht?.temp_c ?? '—'}°C | PM2.5: {item?.pm?.pm2_5 ?? '—'} | Gas: {item?.mq_voltage ?? '—'}V | Tremor: {item?.accel_mag_g ?? '—'} g

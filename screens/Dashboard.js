@@ -41,7 +41,7 @@ const Dashboard = () => {
       return <Text style={styles.muted}>No data yet.</Text>;
     }
 
-    const alertLevel = reading.alert_level || 'green';
+    const alertLevel = reading.alert_level ?? 0;
     const lastUpdated = reading.timestamp ? new Date(reading.timestamp).toLocaleString() : '—';
 
     return (
@@ -52,7 +52,7 @@ const Dashboard = () => {
         </View>
 
         <View style={[styles.indicator, { backgroundColor: pickAlertColor(alertLevel) }]}>
-          <Text style={styles.indicatorText}>{alertLevel.toUpperCase()}</Text>
+          <Text style={styles.indicatorText}>{getAlertLabel(alertLevel)}</Text>
         </View>
 
         <SensorCard label="Temperature" value={reading?.dht?.temp_c ?? '—'} unit="°C" />
@@ -81,16 +81,18 @@ const Dashboard = () => {
 };
 
 const pickAlertColor = (level) => {
-  switch (level) {
-    case 'red':
-      return '#BC4A52';
-    case 'orange':
-      return '#E58E2B';
-    case 'yellow':
-      return '#E5A25F';
-    default:
-      return '#70C175';
-  }
+  const numLevel = typeof level === 'number' ? level : parseInt(level, 10) || 0;
+  if (numLevel >= 4) return '#8B0000';
+  if (numLevel === 3) return '#BC4A52';
+  if (numLevel === 2) return '#E58E2B';
+  if (numLevel === 1) return '#E5A25F';
+  return '#70C175';
+};
+
+const getAlertLabel = (level) => {
+  const numLevel = typeof level === 'number' ? level : parseInt(level, 10) || 0;
+  const labels = ['NORMAL', 'LOW', 'MODERATE', 'HIGH', 'HAZARDOUS', 'CRITICAL'];
+  return labels[Math.min(numLevel, 5)] || 'NORMAL';
 };
 
 const styles = StyleSheet.create({
