@@ -2,11 +2,12 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 import Dashboard from './screens/Dashboard';
 import Logs from './screens/Logs';
 import Controls from './screens/Controls';
 import Toast from 'react-native-toast-message';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const Tab = createBottomTabNavigator();
@@ -30,12 +31,6 @@ const navTheme = {
   }
 };
 
-const TabLabel = ({ label, focused }) => (
-  <View style={styles.tabLabelWrapper}>
-    <Text style={[styles.tabLabel, focused && styles.tabLabelActive]}>{label}</Text>
-  </View>
-);
-
 export default function App() {
   return (
     <NavigationContainer theme={navTheme}>
@@ -45,12 +40,34 @@ export default function App() {
           headerShown: false,
           tabBarStyle: { backgroundColor: '#FFFFFF', borderTopColor: '#F1E5DE', height: 64, paddingBottom: 10, paddingTop: 8 },
           tabBarActiveTintColor: palette.accent,
-          tabBarInactiveTintColor: '#8B7A73'
+          tabBarInactiveTintColor: '#8B7A73',
+          tabBarLabelStyle: { fontSize: 12, fontWeight: '700' }
         }}
       >
-        <Tab.Screen name="Dashboard" component={Dashboard} options={{ tabBarLabel: ({ focused }) => <TabLabel label="Dashboard" focused={focused} /> }} />
-        <Tab.Screen name="Logs" component={Logs} options={{ tabBarLabel: ({ focused }) => <TabLabel label="Live Logs" focused={focused} /> }} />
-        <Tab.Screen name="Controls" component={Controls} options={{ tabBarLabel: ({ focused }) => <TabLabel label="Controls" focused={focused} /> }} />
+        <Tab.Screen 
+          name="Dashboard" 
+          component={Dashboard} 
+          options={{ 
+            tabBarLabel: 'Dashboard',
+            tabBarIcon: ({ color, size }) => <Ionicons name="speedometer" size={size} color={color} />
+          }} 
+        />
+        <Tab.Screen 
+          name="Logs" 
+          component={Logs} 
+          options={{ 
+            tabBarLabel: 'Live Logs',
+            tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />
+          }} 
+        />
+        <Tab.Screen 
+          name="Controls" 
+          component={Controls} 
+          options={{ 
+            tabBarLabel: 'Controls',
+            tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />
+          }} 
+        />
       </Tab.Navigator>
       <Toast position="top" topOffset={50} />
     </NavigationContainer>
